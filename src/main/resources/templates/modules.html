@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Modules · APISec Lab', 'modules', ~{::section})}">
+<body>
+<section>
+    <h1>Modules</h1>
+    <p class="page-lede">Five teaching modules mapped to the student portal. Mark a module complete when you have read it; labs with flags come later.</p>
+    <p class="form-error" th:if="${formError}" th:text="${formError}"></p>
+
+    <div class="stack">
+        <article class="card module-row" th:each="view : ${moduleViews}">
+            <div>
+                <span class="badge" th:text="${view.module.code}">M1</span>
+                <span class="badge" th:text="${view.module.level}">Beginner</span>
+                <span class="badge" th:classappend="${view.completed} ? ' badge-ok'" th:text="${view.statusLabel}">Not started</span>
+                <h2 th:text="${view.module.title}">Title</h2>
+                <p class="muted" th:text="${view.module.summary}">Summary</p>
+                <p class="hint" th:text="${view.module.durationMinutes + ' minutes · ' + #lists.size(view.module.lessons) + ' lessons'}">25 min</p>
+            </div>
+            <a class="btn btn-primary" th:href="@{/modules/{slug}(slug=${view.module.slug})}">View</a>
+        </article>
+    </div>
+</section>
+</body>
+</html>

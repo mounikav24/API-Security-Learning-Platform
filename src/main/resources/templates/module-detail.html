@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Module · APISec Lab', 'modules', ~{::section})}">
+<body>
+<section>
+    <p><a href="/modules">← All modules</a></p>
+    <p class="form-ok" th:if="${formSuccess}" th:text="${formSuccess}"></p>
+    <span class="badge" th:text="${module.code}">M1</span>
+    <span class="badge" th:text="${module.level}">Beginner</span>
+    <span class="badge badge-ok" th:if="${completed}">Completed</span>
+    <h1 th:text="${module.title}">Title</h1>
+    <p class="page-lede" th:text="${module.summary}">Summary</p>
+    <p class="hint" th:text="${module.durationMinutes + ' minutes'}">25 minutes</p>
+
+    <h2>Learning objectives</h2>
+    <ul>
+        <li th:each="item : ${module.objectives}" th:text="${item}">Objective</li>
+    </ul>
+
+    <h2>Lessons</h2>
+    <ol class="lesson-list">
+        <li th:each="lesson : ${module.lessons}">
+            <strong th:text="${lesson.title}">Lesson</strong>
+            <p class="muted" th:text="${lesson.summary}">Summary</p>
+        </li>
+    </ol>
+
+    <h2>Key takeaways</h2>
+    <ul>
+        <li th:each="item : ${module.keyTakeaways}" th:text="${item}">Takeaway</li>
+    </ul>
+
+    <div class="card" th:if="${relatedLab != null}">
+        <span class="badge">Related lab preview</span>
+        <h3 th:text="${relatedLab.title}">Lab</h3>
+        <p class="muted" th:text="${relatedLab.summary}">Summary</p>
+        <a th:href="@{/labs/{slug}(slug=${relatedLab.slug})}">Open preview</a>
+    </div>
+
+    <form th:unless="${completed}" th:action="@{/modules/{slug}/complete(slug=${module.slug})}" method="post" style="margin-top:20px;">
+        <button class="btn btn-primary" type="submit">Mark module complete</button>
+    </form>
+</section>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in · APISec Lab</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="auth-shell">
+    <form class="auth-card" th:action="@{/login}" th:object="${loginRequest}" method="post" novalidate>
+        <a class="brand" href="/"><span class="brand-mark">AS</span> APISec Lab</a>
+        <h1>Welcome back</h1>
+        <p class="sub">Authenticate against the lab database. Invalid credentials stay generic on purpose.</p>
+
+        <p class="form-ok" th:if="${formSuccess}" th:text="${formSuccess}"></p>
+        <p class="form-error" th:if="${formError}" th:text="${formError}"></p>
+
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" th:field="*{email}" autocomplete="username" required>
+            <div class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" th:field="*{password}" autocomplete="current-password" required>
+            <div class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div>
+        <button class="btn btn-primary full" type="submit">Sign in</button>
+        <p class="hint" style="margin-top:16px;">New here? <a href="/signup">Create a student account</a></p>
+    </form>
+</div>
+</body>
+</html>

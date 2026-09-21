@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('API Explorer · APISec Lab', 'explorer', ~{::section})}">
+<body>
+<section>
+    <h1>API Explorer</h1>
+    <p class="page-lede">
+        Catalog of the student-portal APIs that exist today. Send requests from your HTTP client with the JWT cookie or a Bearer token from login.
+    </p>
+    <div class="stack">
+        <article class="card" th:each="ep : ${endpoints}">
+            <div class="endpoint-head">
+                <span class="method" th:classappend="${'method-' + ep.method}" th:text="${ep.method}">GET</span>
+                <code th:text="${ep.path}">/api/profile</code>
+            </div>
+            <p th:text="${ep.description}">Description</p>
+            <p class="hint">Auth: <span th:text="${ep.auth}">JWT</span></p>
+            <pre class="sample" th:text="${ep.sampleResponse}">{}</pre>
+        </article>
+    </div>
+</section>
+</body>
+</html>

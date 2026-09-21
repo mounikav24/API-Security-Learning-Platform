@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Dashboard · APISec Lab', 'dashboard', ~{::section})}">
+<body>
+<section>
+    <h1>Welcome, <span th:text="${currentUser.name}">student</span></h1>
+    <p class="page-lede">
+        Work through five short modules, preview three labs, inspect the live student APIs, then take a five-question transfer check.
+        Live flag capture is not in this slice.
+    </p>
+
+    <div class="stats">
+        <article class="stat">
+            <span>Modules complete</span>
+            <strong th:text="${snapshot.completedModules + ' / ' + snapshot.moduleCount}">0 / 5</strong>
+        </article>
+        <article class="stat">
+            <span>Lab previews</span>
+            <strong th:text="${snapshot.labCount}">3</strong>
+        </article>
+        <article class="stat">
+            <span>Assessment</span>
+            <strong th:if="${snapshot.lastAssessmentPercent != null}" th:text="${snapshot.lastAssessmentPercent + '%'}">—</strong>
+            <strong th:unless="${snapshot.lastAssessmentPercent != null}">Not taken</strong>
+        </article>
+        <article class="stat">
+            <span>Quiz items</span>
+            <strong th:text="${snapshot.questionCount}">5</strong>
+        </article>
+    </div>
+
+    <div class="split">
+        <article class="card">
+            <span class="badge" th:if="${snapshot.nextModule != null}">Up next</span>
+            <span class="badge" th:unless="${snapshot.nextModule != null}">Path complete</span>
+            <h2 th:if="${snapshot.nextModule != null}" th:text="${snapshot.nextModule.title}">Next module</h2>
+            <h2 th:unless="${snapshot.nextModule != null}">All modules marked complete</h2>
+            <p class="muted" th:if="${snapshot.nextModule != null}" th:text="${snapshot.nextModule.summary}">Summary</p>
+            <p class="muted" th:unless="${snapshot.nextModule != null}">Take the assessment or revisit a lab preview.</p>
+            <div class="cta-row" style="margin-top:16px;">
+                <a class="btn btn-primary" th:if="${snapshot.nextModule != null}"
+                   th:href="@{/modules/{slug}(slug=${snapshot.nextModule.slug})}">Open module</a>
+                <a class="btn btn-primary" th:unless="${snapshot.nextModule != null}" href="/assessment">Open assessment</a>
+                <a class="btn btn-ghost" href="/modules">All modules</a>
+            </div>
+        </article>
+        <article class="card">
+            <h2>Quick links</h2>
+            <ul class="plain-list">
+                <li><a href="/labs">Lab previews</a> — IDOR, JWT, mass assignment (no flags yet)</li>
+                <li><a href="/explorer">API Explorer</a> — register, login, profile, catalog</li>
+                <li><a href="/progress">Progress</a> — completions and latest quiz score</li>
+            </ul>
+        </article>
+    </div>
+
+    <h2>Curriculum</h2>
+    <div class="cards">
+        <article class="card" th:each="view : ${snapshot.modules}">
+            <span class="badge" th:text="${view.module.code}">M1</span>
+            <span class="badge" th:classappend="${view.completed} ? ' badge-ok'" th:text="${view.statusLabel}">Not started</span>
+            <h3 th:text="${view.module.title}">Title</h3>
+            <p class="muted" th:text="${view.module.level + ' · ' + view.module.durationMinutes + ' min'}">Beginner</p>
+            <a th:href="@{/modules/{slug}(slug=${view.module.slug})}">Open</a>
+        </article>
+    </div>
+</section>
+</body>
+</html>

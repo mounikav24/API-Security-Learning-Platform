@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Progress · APISec Lab', 'progress', ~{::section})}">
+<body>
+<section>
+    <h1>Progress</h1>
+    <p class="page-lede">Completions are saved per student. Lab flags are not tracked yet.</p>
+
+    <div class="progress-track">
+        <div class="progress-fill"
+             th:style="|width: ${snapshot.moduleCount == 0 ? 0 : (snapshot.completedModules * 100) / snapshot.moduleCount}%|"></div>
+    </div>
+    <p class="hint"
+       th:text="${snapshot.completedModules + ' of ' + snapshot.moduleCount + ' modules complete'}">0 of 5</p>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Module</th>
+            <th>Level</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="view : ${snapshot.modules}">
+            <td>
+                <a th:href="@{/modules/{slug}(slug=${view.module.slug})}" th:text="${view.module.title}">Title</a>
+            </td>
+            <td th:text="${view.module.level}">Beginner</td>
+            <td th:text="${view.statusLabel}">Not started</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="card" style="margin-top:20px;">
+        <h2>Assessment</h2>
+        <p th:if="${latest == null}" class="muted">You have not submitted the transfer quiz yet.</p>
+        <p th:if="${latest != null}"
+           th:text="${'Latest: ' + latest.score + ' / ' + latest.total + ' (' + latest.percent() + '%) at ' + latest.completedAt}">Score</p>
+        <a class="btn btn-ghost" href="/assessment">Open assessment</a>
+    </div>
+</section>
+</body>
+</html>

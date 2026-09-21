@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up · APISec Lab</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="auth-shell">
+    <form class="auth-card" th:action="@{/signup}" th:object="${registerRequest}" method="post" novalidate>
+        <a class="brand" href="/"><span class="brand-mark">AS</span> APISec Lab</a>
+        <h1>Create your student account</h1>
+        <p class="sub">Name, email, and a strong password. Role is STUDENT on day 1.</p>
+
+        <p class="form-error" th:if="${formError}" th:text="${formError}"></p>
+
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" autocomplete="name" required>
+            <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" th:field="*{email}" autocomplete="email" required>
+            <div class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" th:field="*{password}" autocomplete="new-password" data-password required>
+            <p class="hint">At least 8 characters, including one letter and one number.</p>
+            <div class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div>
+        <div class="field">
+            <label for="confirmPassword">Confirm password</label>
+            <input id="confirmPassword" type="password" th:field="*{confirmPassword}" autocomplete="new-password" data-confirm required>
+            <div class="field-error" data-mismatch hidden>Passwords do not match.</div>
+            <div class="field-error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+        </div>
+        <button class="btn btn-primary full" type="submit">Create account</button>
+        <p class="hint" style="margin-top:16px;">Already enrolled? <a href="/login">Sign in</a></p>
+    </form>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

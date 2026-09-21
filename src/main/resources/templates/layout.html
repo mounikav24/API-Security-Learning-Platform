@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (title, active, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">APISec Lab</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <a class="brand" href="/dashboard" style="margin: 6px 8px 18px;">
+            <span class="brand-mark">AS</span> APISec Lab
+        </a>
+        <nav class="nav">
+            <a th:classappend="${activePage == 'dashboard'} ? 'active'" href="/dashboard">Dashboard</a>
+            <a th:classappend="${activePage == 'modules'} ? 'active'" href="/modules">Modules</a>
+            <a th:classappend="${activePage == 'labs'} ? 'active'" href="/labs">Labs</a>
+            <a th:classappend="${activePage == 'explorer'} ? 'active'" href="/explorer">API Explorer</a>
+            <a th:classappend="${activePage == 'assessment'} ? 'active'" href="/assessment">Assessment</a>
+            <a th:classappend="${activePage == 'progress'} ? 'active'" href="/progress">Progress</a>
+            <a th:classappend="${activePage == 'profile'} ? 'active'" href="/profile">Profile</a>
+        </nav>
+    </aside>
+    <div>
+        <header class="header">
+            <strong>APISec Lab</strong>
+            <div class="user-chip">
+                <div>
+                    <div th:text="${currentUser.name}">Student</div>
+                    <small style="color:var(--muted)" th:text="${currentUser.email}">email</small>
+                </div>
+                <div class="avatar" th:text="${#strings.substring(currentUser.name,0,1)}">S</div>
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-ghost" type="submit">Logout</button>
+                </form>
+            </div>
+        </header>
+        <main class="content" th:insert="${content}">
+        </main>
+    </div>
+</div>
+</body>
+</html>

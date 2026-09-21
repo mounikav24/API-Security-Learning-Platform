@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APISec Lab</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="container topbar">
+    <a class="brand" href="/">
+        <span class="brand-mark">AS</span>
+        APISec Lab
+    </a>
+    <nav class="cta-row">
+        <a class="btn btn-ghost" href="/login">Sign in</a>
+        <a class="btn btn-primary" href="/signup">Create account</a>
+    </nav>
+</header>
+
+<main class="container hero">
+    <section>
+        <span class="badge">Day 1 vertical slice</span>
+        <h1>Learn API security by attacking a lab built to teach you.</h1>
+        <p class="lede">
+            Guided exercises, deliberately vulnerable APIs, flag verification, and secure-vs-vulnerable
+            comparisons — starting with a complete student identity flow.
+        </p>
+        <div class="cta-row">
+            <a class="btn btn-primary" href="/signup">Start as a student</a>
+            <a class="btn btn-ghost" href="/login">I already have an account</a>
+        </div>
+    </section>
+    <aside class="panel">
+        <h2>What you will practice</h2>
+        <div class="feature-grid" style="grid-template-columns: 1fr;">
+            <div class="feature">
+                <h3>Auth that feels production-like</h3>
+                <p>Sign up, JWT login, protected dashboard, and logout — the foundation for later labs.</p>
+            </div>
+            <div class="feature">
+                <h3>Coming next</h3>
+                <p>Modules, labs, API Explorer, assessments, and transfer tasks land after this slice.</p>
+            </div>
+        </div>
+    </aside>
+</main>
+</body>
+</html>

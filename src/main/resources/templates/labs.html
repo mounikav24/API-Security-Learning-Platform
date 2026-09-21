@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Labs · APISec Lab', 'labs', ~{::section})}">
+<body>
+<section>
+    <h1>Labs</h1>
+    <p class="page-lede">
+        Minimal previews of the three labs that will later host flags. You can study the attack idea now; exploit endpoints and verification are not wired yet.
+    </p>
+    <div class="cards">
+        <article class="card" th:each="lab : ${labs}">
+            <span class="badge" th:text="${lab.difficulty}">Easy</span>
+            <span class="badge" th:text="${lab.status}">Preview</span>
+            <h3 th:text="${lab.title}">Title</h3>
+            <p class="muted" th:text="${lab.summary}">Summary</p>
+            <a th:href="@{/labs/{slug}(slug=${lab.slug})}">Open preview</a>
+        </article>
+    </div>
+</section>
+</body>
+</html>

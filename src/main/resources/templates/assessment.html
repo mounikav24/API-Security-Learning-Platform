@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Assessment · APISec Lab', 'assessment', ~{::section})}">
+<body>
+<section>
+    <h1>Transfer assessment</h1>
+    <p class="page-lede">
+        Five questions on the modules above. This is a knowledge check, not a live-API exam. Your latest score is stored on your account.
+    </p>
+
+    <p class="form-ok" th:if="${latest != null and submitted == null}"
+       th:text="${'Latest score: ' + latest.score + ' / ' + latest.total + ' (' + latest.percent() + '%)'}">Score</p>
+    <p class="form-ok" th:if="${submitted}"
+       th:text="${'Submitted: ' + latest.score + ' / ' + latest.total + ' (' + latest.percent() + '%)'}">Score</p>
+
+    <form method="post" action="/assessment">
+        <fieldset class="card quiz" th:each="q, iter : ${questions}">
+            <legend th:text="'Question ' + ${iter.count}">Question</legend>
+            <p th:text="${q.prompt}">Prompt</p>
+            <label class="choice" th:each="choice, cIter : ${q.choices}">
+                <input type="radio" th:name="${q.id}" th:value="${cIter.index}" required>
+                <span th:text="${choice}">Choice</span>
+            </label>
+            <p class="hint" th:if="${submitted}" th:text="${explanations[iter.index]}">Explanation</p>
+        </fieldset>
+        <button class="btn btn-primary" type="submit">Submit answers</button>
+    </form>
+</section>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Lab · APISec Lab', 'labs', ~{::section})}">
+<body>
+<section>
+    <p><a href="/labs">← All labs</a></p>
+    <span class="badge" th:text="${lab.difficulty}">Easy</span>
+    <span class="badge" th:text="${lab.status}">Preview</span>
+    <h1 th:text="${lab.title}">Title</h1>
+    <p class="page-lede" th:text="${lab.summary}">Summary</p>
+
+    <h2>Objectives</h2>
+    <ul>
+        <li th:each="item : ${lab.objectives}" th:text="${item}">Objective</li>
+    </ul>
+
+    <div class="card" th:if="${relatedModule != null}">
+        <span class="badge">Read first</span>
+        <h3 th:text="${relatedModule.title}">Module</h3>
+        <a th:href="@{/modules/{slug}(slug=${relatedModule.slug})}">Open module</a>
+    </div>
+
+    <p class="hint" style="margin-top:18px;">Flag submission and a live vulnerable API for this lab are not part of this build.</p>
+</section>
+</body>
+</html>

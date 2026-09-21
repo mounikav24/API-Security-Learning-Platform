@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Coming Soon · APISec Lab', ${activePage}, ~{::section})}">
+<body>
+<section>
+    <span class="badge">Coming soon</span>
+    <h1 th:text="${pageTitle}">Page</h1>
+    <p style="color:var(--muted); max-width:60ch;">
+        This area is reserved for a later lab day. Authentication already gates this route.
+    </p>
+</section>
+</body>
+</html>
